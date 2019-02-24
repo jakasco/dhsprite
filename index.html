@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #stage{
+        width: 800px;
+        height: 481px;
+        background: url("stage.png");
+        background-size: contain;
+        margin: auto;
+        position: relative;
+    }
+    .dog{
+        width: 120px;
+        height: 110px;
+        left: 10px;
+        transition: left 3s linear;
+        background: url("sprite.png") 0 0;
+        animation: koiru 0.5s steps(4) 6,
+        sniff 0.5s 3s steps(2) 6, jump 1s 6s steps(3) 1,
+        laugh 200ms 7s steps(2) 15 alternate;
+        position: absolute;
+        top: 350px;
+
+    }
+
+    .duck1{
+
+        z-index: 1;
+        width: 71px;
+        height: 60px;
+        left: -100px;
+        background: url("sprite.png")0 -240px;
+        position: absolute;
+        top: 50px;
+        animation: ankka 0.5s steps(3) infinite;
+        transition: left 3s linear;
+    }
+
+
+    .duck2{
+        z-index: 1;
+        width: 71px;
+        height: 60px;
+        left: -100px;
+        background: url("sprite.png")0 -240px;
+        position: absolute;
+        top: 50px;
+        animation: ankka 0.5s steps(3) infinite;
+        transition: left 3s linear;
+    }
+
+    .duck3{
+        z-index: 1;
+        width: 71px;
+        height: 60px;
+        left: -100px;
+        background: url("sprite.png")0 -240px;
+        position: absolute;
+        top: 50px;
+        animation: ankka 0.5s steps(3) infinite;
+        transition: left 3s linear;
+    }
+
+
+    .duck1fly {
+        left: 800px;
+    }
+
+    .duck2fly {
+        left: 800px;
+    }
+
+    .duck3fly {
+        left: 800px;
+    }
+
+    @keyframes ankka {
+
+        from{
+            background-position: 0 -240px;
+        }to{
+            background-position: -225px -240px;
+                 }
+
+    }
+
+    .dogwalk{
+        left: 300px;
+    }
+
+
+    @keyframes koiru {
+        from{
+            background-position: 0 0;
+        }
+        to{
+            background-position: -480px 0;
+        }
+    }
+
+    @keyframes sniff {
+        from{
+            background-position: -360px 0;
+        }
+        to{
+            background-position: -600px 0;
+        }
+    }
+    @keyframes jump {
+        from{
+            background-position: 0 -110px;
+        }
+        to{
+            background-position: -360px -110px;
+        }
+    }
+
+    @keyframes laugh {
+        from{
+            background-position: -360px -110px;
+        }
+        to{
+            background-position: -600px -110px;
+        }
+    }
+</style>
+<body>
+<div id="stage">
+    <div class="dog"></div>
+    <div class="duck1"></div>
+
+    <div class="duck2"></div>
+
+    <div class="duck3"></div>
+
+</div>
+
+<script>
+
+   let clickCounter = {
+
+     duck1: 3,
+     duck2: 3,
+     duck3: 3,
+     total: 0,
+     panokset1: 3,
+     panokset2: 3,
+     panokset3: 3,
+   }
+
+   let list =[true,false,false];
+
+  let dog = document.querySelector('.dog');
+  let duck1 = document.querySelector('.duck1');
+
+
+  let stage = document.getElementById("stage");
+
+  let dogTimer = setTimeout(() => {
+    console.log('BOOM');
+    dog.classList.add('dogwalk');
+  }, 50);
+
+  let duckTimer = setTimeout(() => {
+
+    duck1.classList.add('duck1fly');
+  }, 3000);
+
+   let duckTimer12 = setTimeout(() => {
+     list[0] = false;
+     list[1] = true;
+     duck1.style.display = "none";
+   }, 6000);
+
+   let duckTimer2 = setTimeout(() => {
+
+     duck2.classList.add('duck2fly');
+   }, 7000);
+
+   let duckTimer22 = setTimeout(() => {
+     list[1] = false;
+     list[2] = true;
+     duck2.style.display = "none";
+   }, 10000);
+
+
+   let duckTimer3 = setTimeout(() => {
+
+     duck3.classList.add('duck3fly');
+   }, 14000);
+
+   let duckTimer23 = setTimeout(() => {
+
+     duck3.style.display = "none";
+   }, 17000);
+
+  duck1 = document.querySelector('.duck1');
+  duck1.addEventListener('click',() =>{
+
+    if(clickCounter.panokset1>0 && list[0]==true) {
+
+      clickCounter.duck1 = clickCounter.duck1 - 1;
+      console.log("Sait pisteen!!!");
+      clickCounter.total ++;
+      console.log(clickCounter.total)
+      list[0] = false;
+      list[1] = true;
+      duck1.style.display = "none";
+    }
+
+  })
+
+
+   let duck2 = document.querySelector('.duck2');
+   duck2.addEventListener('click',() =>{
+
+     if(clickCounter.panokset2>0 && list[1]==true) {
+
+       clickCounter.duck2 = clickCounter.duck2 - 1;
+       console.log("Sait pisteen!!!");
+       clickCounter.total ++;
+       console.log(clickCounter.total)
+       list[1] = false;
+       list[2] = true;
+       duck2.style.display = "none";
+     }
+   })
+
+   let duck3 = document.querySelector('.duck3');
+   duck3.addEventListener('click',() =>{
+
+     if(clickCounter.panokset3>0 && list[2]==true)  {
+
+       clickCounter.duck3 = clickCounter.duck3 - 1;
+       console.log("Sait pisteen!!!");
+       clickCounter.total ++;
+       console.log(clickCounter.total)
+       duck3.style.display = "none";
+       alert("Pisteet: "+clickCounter.total);
+     }
+
+   })
+
+
+  stage.addEventListener("click", ()=> {
+
+    if(list[0]==true){
+      clickCounter.panokset1 = clickCounter.panokset1 - 1;
+      console.log("Panokset 1: "+clickCounter.panokset1);
+
+      if(clickCounter.panokset1==0){
+        list[0] = false;
+        list[1] = true;
+      }
+
+    }else if(list[1]==true){
+      clickCounter.panokset2 = clickCounter.panokset2 - 1;
+      console.log("Panokset 2: "+clickCounter.panokset2);
+
+      if(clickCounter.panokset2==0){
+        list[1] = false;
+        list[2] = true;
+      }
+
+    }else if(list[2]==true){
+      clickCounter.panokset3 = clickCounter.panokset3 - 1;
+      console.log("Panokset 3: "+clickCounter.panokset3);
+      if(clickCounter.panokset3==0){
+        clickCounter.panokset3 = 0;
+        alert("Pisteet: "+clickCounter.total);
+      }
+    }
+
+  })
+
+</script>
+
+</body>
+</html>
